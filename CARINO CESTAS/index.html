@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Cestas de Presentes - Cariño</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f4e9;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Cabeçalho */
+        header {
+            text-align: center;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #f7ddb4, #f7ddb4);
+            color: #bd0003;
+            border-radius: 20px;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Grid de produtos */
+        .produtos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        /* Card do produto */
+        .produto-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .produto-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .produto-imagem {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background-color: #eee;
+        }
+
+        /* Caso ainda não tenha a foto real */
+        .produto-imagem.placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e0e0e0;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .produto-info {
+            padding: 20px;
+        }
+
+        .produto-titulo {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #bd0003;
+        }
+
+        .produto-descricao {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .produto-preco {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #bd0003;
+            margin-bottom: 20px;
+        }
+
+        .btn-whatsapp {
+            display: inline-block;
+            background-color: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            transition: background 0.3s;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #8c1212;
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #2e2e2e;
+            color: white;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+
+        footer a {
+            color: #25D366;
+            text-decoration: none;
+        }
+
+        /* Responsivo */
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.5rem; }
+            .produtos-grid { gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+          <img src="imagens/logo.png" alt="Logo da Loja" style="max-width: 450px; height: auto; margin-bottom: 15px;">
+          <p>Presentes artesanais com muito carinho - Entregamos em toda a cidade</p>
+        </header>
+
+        <div class="produtos-grid" id="lista-produtos">
+            <!-- Os produtos serão inseridos via JavaScript -->
+        </div>
+
+        <footer>
+            <p>📞 Atendimento via WhatsApp: <a href="#" id="link-whatsapp-fixo">Clique aqui para falar conosco</a></p>
+            <p>💝 Entregamos com segurança e embalagem especial</p>
+        </footer>
+    </div>
+
+    <script>
+        // =====================================================
+        // CONFIGURAÇÕES - VOCÊ DEVE ALTERAR AQUI!
+        // =====================================================
+        const TELEFONE = "5522981443276";  // ⚠️ Coloque o número com DDD e país (55 para Brasil)
+        // Exemplo: 5511999999999 = (11) 99999-9999
+        
+        // LISTA DE PRODUTOS - Edite, adicione ou remova
+        const produtos = [
+            {
+                nome: "Cesta de Chocolate",
+                descricao: "Barras, bombons, Kit-Kats e muito mais!",
+                preco: 65.00,
+                imagem: "imagens/cesta-chocolate.jpeg",
+                // Se tiver imagem própria, substitua a URL acima pelo caminho da sua foto
+                // Ex: "imagens/cesta-luxo.jpg"
+            },
+            {
+                nome: "Cesta de Café + Caneca + Flor",
+                descricao: "Um presente delicado e cheio de amor para o Dia das Mães! Surpreenda quem sempre cuidou de você com uma cesta completa, linda e pensada em cada detalhe.",
+                preco: 190.00,
+                imagem: "imagens/cesta-com-flor.jpeg"
+            },
+            {
+                nome: "Cesta de Café + Caneca",
+                descricao: "Delicado, completo e cheio de carinho o presente perfeito pra começar o dia com amor. Disponível em opções de cores azul e rosa.",
+                preco: 160.00,
+                imagem: "imagens/cesta-sem-flor.jpeg"
+            },
+            {
+                nome: "Caneca",
+                descricao: "Café, carinho e um toque de doçura em cada detalhe. Uma opção delicada e encantadora para surpreender logo pela manhã! Caneca decorada, Drip Coffe, Cappuccino, Chocolates especiais. Tudo pronto para transformar o Dia das Mães mais especial! Obs: alguns produtos pode ser substituídos por outros iguais ou de outra marca.",
+                preco: 50.00,
+                imagem: "imagens/caneca.jpeg"
+            },
+            {
+                nome: "Cesta Happy Hour",
+                descricao: "Uma opção perfeita pra presentear com estilo e sabor! Obs: temos opção outras opções de bebidas e bandejas de petiscos. Consultar disponibilidade e valores.",
+                preco: 175.00,
+                imagem: "imagens/cesta-masculina.jpeg"
+            },
+            {
+                nome: "Cesta Mini Luxo",
+                descricao: "Ideal para presentear em aniversários, agradecimentos ou surpreender alguém especial com um gesto cheio de carinho. Biscoitos, queijos, capuccinos e geléias com muito carinho!",
+                preco: 90.00,
+                imagem: "imagens/cesta-simples.jpeg"
+            }
+        ];
+
+        // =====================================================
+        // FUNÇÃO PARA GERAR LINK DO WHATSAPP
+        // =====================================================
+        function gerarLinkWhatsapp(produtoNome, produtoPreco) {
+            // Formata o preço para exibição
+            const precoFormatado = produtoPreco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            // Texto que será enviado automaticamente
+            const mensagem = `Olá, gostaria de comprar a *${produtoNome}* - ${precoFormatado}. Poderia me passar mais informações?`;
+            // Codifica a mensagem para URL
+            const mensagemCodificada = encodeURIComponent(mensagem);
+            return `https://wa.me/${TELEFONE}?text=${mensagemCodificada}`;
+        }
+
+        // =====================================================
+        // RENDERIZAR OS PRODUTOS NA TELA
+        // =====================================================
+        function carregarProdutos() {
+            const container = document.getElementById('lista-produtos');
+            if (!container) return;
+
+            // Limpa container
+            container.innerHTML = '';
+
+            // Para cada produto, cria o card
+            produtos.forEach(produto => {
+                const card = document.createElement('div');
+                card.className = 'produto-card';
+
+                // Se a imagem não for definida, usa placeholder
+                let imagemHtml = `<img class="produto-imagem" src="${produto.imagem}" alt="${produto.nome}">`;
+                // (O placehold.co já serve como imagem temporária)
+
+                const linkWhats = gerarLinkWhatsapp(produto.nome, produto.preco);
+
+                card.innerHTML = `
+                    ${imagemHtml}
+                    <div class="produto-info">
+                        <div class="produto-titulo">${produto.nome}</div>
+                        <div class="produto-descricao">${produto.descricao}</div>
+                        <div class="produto-preco">${produto.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>
+                        <a href="${linkWhats}" class="btn-whatsapp" target="_blank">📲 Eu Quero!</a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Configurar link do WhatsApp fixo no rodapé
+        function configurarWhatsappFixo() {
+            const linkFixo = document.getElementById('link-whatsapp-fixo');
+            if (linkFixo) {
+                const mensagemFixa = encodeURIComponent("Olá! Vi o site de cestas e gostaria de mais informações.");
+                linkFixo.href = `https://wa.me/${TELEFONE}?text=${mensagemFixa}`;
+            }
+        }
+
+        // Inicializar tudo quando a página carregar
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarProdutos();
+            configurarWhatsappFixo();
+        });
+    </script>
+</body>
+</html>
